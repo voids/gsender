@@ -3,7 +3,17 @@ gsender
 
 a smtp sender written by golang
 
+##install
+
+`go get github.com/voids/gsender`
+
+```go
+	import (
+    	"github.com/voids/gsender"
+    )
+```
 ##demo
+
 ```go
 	sender := new(gsender.Sender)
 	sender.Mail = new(gsender.Mail)        // alloc memory for the anonymous struct

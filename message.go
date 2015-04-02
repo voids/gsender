@@ -14,11 +14,8 @@ type Message struct {
 	subject     string
 	body        string
 	attachments []*Attachment
-	htmlEnable  bool
-}
-
-func (m *Message) EnableHtml() {
-	m.htmlEnable = true
+	// set the type to "html" if Html is true.
+	Html bool
 }
 
 func (m *Message) SetSubject(subject string) {

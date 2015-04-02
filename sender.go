@@ -1,19 +1,19 @@
 package gsender
 
 import (
-	"fmt"
-	"crypto/md5"
-	"net/smtp"
 	"bytes"
-	"strings"
-	"time"
-	"path/filepath"
+	"crypto/md5"
+	"fmt"
 	"io"
 	"mime"
+	"net/smtp"
+	"path/filepath"
+	"strings"
+	"time"
 )
 
 type Sender struct {
-	*Mail
+	Mail
 	Password string
 	Host     string
 	Port     uint
@@ -45,7 +45,7 @@ func (s *Sender) Send(m *Message, r *Receiver) error {
 	fmt.Fprintf(&buf, "Content-Type: multipart/mixed; boundary=%s\r\n\r\n", boundary)
 	fmt.Fprintf(&buf, "--%s\r\n", boundary)
 	textType := "plain"
-	if m.htmlEnable == true {
+	if m.Html == true {
 		textType = "html"
 	}
 	fmt.Fprintf(&buf, "Content-Type: text/%s; charset=UTF-8\r\n", textType)
@@ -66,5 +66,5 @@ func (s *Sender) Send(m *Message, r *Receiver) error {
 	}
 	fmt.Fprintf(&buf, "--%s--\r\n", boundary)
 	auth := smtp.PlainAuth("", s.Address, s.Password, s.Host)
-	return SendMail(s.Host+fmt.Sprintf(":%v", s.Port), auth, s.Address, addressListEmails(r.to, r.cc, r.bcc), buf.Bytes(), s.TLS)
+	return sendMail(s.Host+fmt.Sprintf(":%v", s.Port), auth, s.Address, addressListEmails(r.to, r.cc, r.bcc), buf.Bytes(), s.TLS)
 }

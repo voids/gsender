@@ -1,20 +1,12 @@
-gsender
-=======
+/*
+package gsender makes smtp easy to use.
 
-a smtp sender written by golang
+Installation
 
-##install
+	go get github.com/voids/gsender
 
-`go get github.com/voids/gsender`
+Get started
 
-```go
-	import (
-    	"github.com/voids/gsender"
-    )
-```
-##demo
-
-```go
 	sender := new(gsender.Sender)
 	sender.Address = "voids@example.com"
 	sender.Name = "voids"
@@ -40,4 +32,7 @@ a smtp sender written by golang
 	if err := sender.Send(msg, receiver); err != nil {
 		panic(err)
 	}
-```
+
+
+*/
+package gsender

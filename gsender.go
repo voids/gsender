@@ -1,13 +1,13 @@
 package gsender
 
 import (
+	"bytes"
 	"crypto/tls"
 	"encoding/base64"
-	"bytes"
-	"strings"
 	"net"
-	"net/smtp"
 	"net/mail"
+	"net/smtp"
+	"strings"
 )
 
 const BASE64_MAX_LEN = 76
@@ -51,7 +51,7 @@ func base64EncodeRfc2045(src []byte) string {
 	return strings.TrimSpace(result)
 }
 
-func Dial(addr string) (*smtp.Client, error) {
+func dial(addr string) (*smtp.Client, error) {
 	conn, err := tls.Dial("tcp", addr, nil)
 	if err != nil {
 		return nil, err
@@ -60,10 +60,10 @@ func Dial(addr string) (*smtp.Client, error) {
 	return smtp.NewClient(conn, host)
 }
 
-func SendMail(addr string, auth smtp.Auth, from string, to []string, msg []byte, tls bool) (err error) {
+func sendMail(addr string, auth smtp.Auth, from string, to []string, msg []byte, tls bool) (err error) {
 	var c *smtp.Client
 	if tls == true {
-		c, err = Dial(addr)
+		c, err = dial(addr)
 	} else {
 		c, err = smtp.Dial(addr)
 	}

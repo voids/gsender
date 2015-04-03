@@ -3,6 +3,7 @@ package gsender
 import (
 	"encoding/base64"
 	"io/ioutil"
+	"path"
 )
 
 type Attachment struct {
@@ -32,7 +33,7 @@ func (m *Message) SetBody(body string) {
 
 func (m *Message) AddAttachment(filename string) error {
 	attachment := new(Attachment)
-	attachment.name = filename
+	attachment.name = "=?UTF-8?B?" + base64.StdEncoding.EncodeToString([]byte(path.Base(filename))) + "?="
 	if attach, err := ioutil.ReadFile(filename); err != nil {
 		return err
 	} else {
